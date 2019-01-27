@@ -101,7 +101,7 @@ class Client extends EventEmitter {
 					 */
 					const view = {
 						timestamp: data.t,
-						bot: await this.space.fetchBot(data.d.bot, { raw: this.options.raw }),
+						bot: this.options.fetch ? await this.space.fetchBot(data.d.bot, { raw: this.options.raw }) : null,
 						botID: data.d.bot,
 					};
 
@@ -115,7 +115,7 @@ class Client extends EventEmitter {
 					 */
 					const click = {
 						timestamp: data.t,
-						bot: await this.space.fetchBot(data.d.bot, { raw: this.options.raw }),
+						bot: this.options.fetch ? await this.space.fetchBot(data.d.bot, { raw: this.options.raw }) : null,
 						botID: data.d.bot,
 					};
 
@@ -131,9 +131,9 @@ class Client extends EventEmitter {
 					 */
 					const upvote = {
 						timestamp: data.t,
-						bot: await this.space.fetchBot(data.d.bot, { raw: this.options.raw }),
+						bot: this.options.fetch ? await this.space.fetchBot(data.d.bot, { raw: this.options.raw }) : null,
 						botID: data.d.bot,
-						user: new PartialUser(data.d.user),
+						user: this.options.raw ? data.d.user : new PartialUser(data.d.user),
 						userID: data.d.user.id,
 					};
 
