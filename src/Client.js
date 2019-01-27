@@ -9,9 +9,15 @@ const Events = {
 	DEBUG: 'debug',
 };
 
+const Codes = {
+	'2': 'GUILD_PAGE_VIEW',
+	'3': 'GUILD_JOIN',
+	'4': 'GUILD_UPVOTE'
+};
+
 /**
  * @external WebSocket
- * @see https://npmjs.org/package/ws
+ * @see https://github.com/websockets/ws/blob/master/lib/websocket.js
  */
 
 /**
@@ -89,6 +95,10 @@ class Client extends EventEmitter {
 				data = JSON.parse(data);
 				this._debug('Received Update From Client');
 				this.emit('raw', data);
+
+				for (const i of this.options.ignoreEvents) {
+					if (data.op === i) return this._debug(`Event ${i} (${Codes[i]}) Disabled, Won't Emit Event`);
+				}
 
 				if (data.op === 2) {
 					/**

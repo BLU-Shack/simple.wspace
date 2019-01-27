@@ -1,11 +1,16 @@
 /**
  * @typedef {object} ClientOptions
- * @property {boolean} [fetch=false] When set to true, will fetch a Bot before emitting an event. Requires `simple.space` be installed.
- * @property {boolean} [raw=false] When set to true, returns the raw object of the bot. Requires {@link ClientOptions#fetch} be true.
- * @property {string[]} [tokens=[]] An array of bot tokens provided from botlist.space to receive the bot's events from.
+ * @property {boolean} [fetch=false] When set to true, will fetch a Guild before emitting an event. Requires `servers.space` be installed.
+ * @property {number[]} [ignoreEvents=[]] An array of event numbers to ignore. These can be:
+ * 2 -> Bot View
+ * 3 -> Bot Invite
+ * 4 -> Bot Upvote
+ * @property {boolean} [raw=false] When set to true, returns the raw object of the guild. Requires {@link ClientOptions#fetch} be true.
+ * @property {string[]} [tokens=[]] An array of bot tokens provided from serverlist.space to receive the bot's events from.
  */
 exports.ClientOpts = {
 	fetch: false,
+	ignoreEvents: [],
 	raw: false,
 	tokens: [],
 };
