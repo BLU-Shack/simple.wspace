@@ -139,7 +139,7 @@ class Client extends EventEmitter {
 				}
 			})
 			.on('error', this._debug)
-			.on('disconnect', (code, message) => {
+			.on('close', (code, message) => {
 				this.emit(Events.CLOSE, { code: code, message: message });
 				clearInterval(this.int);
 			})
