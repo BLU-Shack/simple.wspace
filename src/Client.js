@@ -54,22 +54,20 @@ class Client extends EventEmitter {
 		 */
 		this.space = null;
 
-		try {
-			const Space = require('simple.space');
-			this.space = new Space.Client({ cache: false });
-		} catch (e) {
-			this._debug('Unable to find simple.space module; Make sure ClientOptions#fetch is set to false...');
-		}
-
-		this._debug('Now Connecting...');
-
 		/**
 		 * The WebSocket Connection.
 		 * @type {WebSocket}
 		 */
 		this.ws = new WebSocket('wss://gateway.botlist.space')
 			.on('open', () => {
-				this._debug('Successfully connected to botlist.space Gateway');
+				try {
+					const Space = require('simple.space');
+					this.space = new Space.Client({ cache: false });
+				} catch (e) {
+					this._debug('Unable to find simple.space module; Make sure ClientOptions#fetch is set to false...');
+				}
+
+				this._debug('Now Connecting...');
 
 				const body = {
 					op: 0,
@@ -159,7 +157,7 @@ class Client extends EventEmitter {
 				if (!this.ready) {
 					this.ready = new Date();
 					this.emit(Events.READY, this.ready);
-					this.emit(Events.DEBUG, this.ready);
+					this._debug('Successfully connected to botlist.space Gateway');
 				}
 				const old = parseInt(data.toString());
 				const now = Date.now();
