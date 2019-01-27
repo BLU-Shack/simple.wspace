@@ -10,9 +10,9 @@ const Events = {
 };
 
 const Codes = {
-	'2': 'GUILD_PAGE_VIEW',
-	'3': 'GUILD_JOIN',
-	'4': 'GUILD_UPVOTE'
+	'2': 'BOT_PAGE_VIEW',
+	'3': 'BOT_INVITE',
+	'4': 'BOT_UPVOTE'
 };
 
 /**
