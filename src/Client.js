@@ -31,8 +31,8 @@ class Client extends EventEmitter {
 		this.options = Object.assign(ClientOptions, options);
 
 		/**
-		 * The time of when the WebSocket connection is established.
-		 * @type {?boolean}
+		 * The time of when the Client successfully establishes a stable connection to the Gateway.
+		 * @type {?Date}
 		 */
 		this.ready = null;
 
@@ -65,13 +65,11 @@ class Client extends EventEmitter {
 		 */
 		this.ws = new WebSocket('wss://gateway.botlist.space')
 			.on('open', () => {
-				this.ready = new Date();
-				this.emit(Events.READY, this.ready);
 				this._debug('Successfully connected to botlist.space Gateway');
 
 				const body = {
 					op: 0,
-					t: this.ready,
+					t: Date.now(),
 					d: {
 						tokens: this.options.tokens,
 					},
@@ -96,7 +94,7 @@ class Client extends EventEmitter {
 					/**
 					 * @typedef {object} ViewContents
 					 * @property {Bot} [bot] The Bot that was viewed upon by a user.
-					 * @property {string} botID The bot's ID.
+					 * @property {string} botID The bot's Discord ID.
 					 * @property {number} timestamp The timestamp of when the view took place.
 					 */
 					const view = {
@@ -110,7 +108,7 @@ class Client extends EventEmitter {
 					/**
 					 * @typedef {object} InviteContents
 					 * @property {Bot} [bot] The bot that was requested of an invite of.
-					 * @property {string} botID The bot's ID.
+					 * @property {string} botID The bot's Discord ID.
 					 * @property {number} timestamp The timestamp of when the bot's invite was requested.
 					 */
 					const click = {
@@ -140,12 +138,16 @@ class Client extends EventEmitter {
 					this.emit('upvote', upvote);
 				}
 			})
-			.on('error', console.error)
+			.on('error', this._debug)
 			.on('disconnect', (code, message) => {
 				this.emit(Events.CLOSE, { code: code, message: message });
 				clearInterval(this.int);
 			})
 			.on('pong', data => {
+				if (!this.ready) {
+					this.ready = new Date();
+					this.emit(Events.READY, this.ready);
+				}
 				const old = parseInt(data.toString());
 				const now = Date.now();
 				this.pings.push(now - old);
@@ -155,6 +157,7 @@ class Client extends EventEmitter {
 
 	/**
 	 * The average ping of some of the recent pings performed.
+	 * @readonly
 	 * @type {?number}
 	 */
 	get ping() {
@@ -163,7 +166,8 @@ class Client extends EventEmitter {
 	}
 
 	/**
-	 * The timestamp of when the WebSocket was ready.
+	 * The timestamp of when the WebSocket established a stable connection.
+	 * @readonly
 	 * @type {number}
 	 */
 	get readyTimestamp() {
@@ -192,7 +196,8 @@ class Client extends EventEmitter {
 		if (!Array.isArray(opts.tokens)) throw new TypeError('options.tokens must be an array.');
 		if (!opts.tokens.length) throw new SyntaxError('options.tokens must include at least 1 bot token provided from botlist.space.');
 		if (opts.tokens.some(i => typeof i !== 'string')) throw new TypeError('options.tokens requires all values to be a string.');
-		this.options = opts;
+
+		return this.options = opts;
 	}
 
 	/**
