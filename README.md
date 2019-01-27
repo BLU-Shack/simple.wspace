@@ -27,7 +27,7 @@ What simple.wspace has:
 
 ## Full JSDoc Documentation
 
-https://blu-shack.github.io/simple.wspace/
+(Not Made Yet; Module Needs Polishment)
 
 ## Contributing
 
