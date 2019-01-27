@@ -1,6 +1,6 @@
 <div style='text-align: center; '>
     <p>
-        <img src='https://i.imgur.com/ozwnVmk.png' width=500 height=150>
+        <img src='https://i.imgur.com/ozwnVmk.png' width=600 height=250>
     </p>
     <p>
         <a href='https://www.npmjs.com/package/simple.wspace'><img src='https://nodei.co/npm/simple.wspace.png'></a>
