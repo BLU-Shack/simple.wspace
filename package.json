@@ -3,6 +3,7 @@
 	"version": "0.1.1",
 	"description": "Connect with the botlist.space WebSocket feature.",
 	"main": "src/",
+	"types": "typings/index.d.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "node private/dev.js"
