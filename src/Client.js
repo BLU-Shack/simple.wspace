@@ -95,7 +95,7 @@ class Client extends EventEmitter {
 				if (data.op === 2) {
 					/**
 					 * @typedef {object} ViewContents
-					 * @property {Bot} bot The Bot that was viewed upon by a user.
+					 * @property {Bot} [bot] The Bot that was viewed upon by a user.
 					 * @property {string} botID The bot's ID.
 					 * @property {number} timestamp The timestamp of when the view took place.
 					 */
@@ -109,7 +109,7 @@ class Client extends EventEmitter {
 				} else if (data.op === 3) {
 					/**
 					 * @typedef {object} InviteContents
-					 * @property {Bot} bot The bot that was requested of an invite of.
+					 * @property {Bot} [bot] The bot that was requested of an invite of.
 					 * @property {string} botID The bot's ID.
 					 * @property {number} timestamp The timestamp of when the bot's invite was requested.
 					 */
@@ -123,7 +123,7 @@ class Client extends EventEmitter {
 				} else if (data.op === 4) {
 					/**
 					 * @typedef {object} UpvoteContents
-					 * @property {Bot} bot The bot that was requested of an invite of.
+					 * @property {Bot} [bot] The bot that was requested of an invite of.
 					 * @property {string} botID The bot's Discord ID.
 					 * @property {PartialUser} user The user that upvoted the bot.
 					 * @property {string} userID The user's Discord ID.
@@ -181,8 +181,8 @@ class Client extends EventEmitter {
 
 	/**
 	 * Edits the ClientOptions.
-	 * @param {ClientOptions} [options] Options to change.
-	 * @param {boolean} [preset] If set to true, uses the original options instead of {@link Client#options}
+	 * @param {ClientOptions} options Options to change.
+	 * @param {boolean} [preset=false] If set to true, uses the original options instead of {@link Client#options}
 	 * @returns {ClientOptions}
 	 */
 	edit(options, preset = false) {

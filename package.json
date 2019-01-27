@@ -1,6 +1,6 @@
 {
   "name": "simple.wspace",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Connect with the botlist.space WebSocket feature.",
   "main": "src/",
   "scripts": {
