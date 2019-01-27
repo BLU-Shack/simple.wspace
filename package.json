@@ -1,0 +1,25 @@
+{
+  "name": "simple.wspace",
+  "version": "0.0.1",
+  "description": "Connect with the botlist.space WebSocket feature.",
+  "main": "src/",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node private/dev.js"
+  },
+  "keywords": [
+    "simple.space",
+    "ws",
+    "botlist.space",
+    "botlist.space",
+    "websocket"
+  ],
+  "author": "iREDMe",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^6.1.3"
+  },
+  "optionalDependencies": {
+    "simple.space": "^3.1.0-1"
+  }
+}
