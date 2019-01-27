@@ -34,7 +34,7 @@ class Client extends EventEmitter {
 		 * ClientOptions.
 		 * @type {ClientOptions}
 		 */
-		this.options = Object.assign(ClientOptions, options);
+		this.options = this.edit(options, true);
 
 		/**
 		 * The time of when the Client successfully establishes a stable connection to the Gateway.
@@ -47,8 +47,6 @@ class Client extends EventEmitter {
 		 * @type {number[]}
 		 */
 		this.pings = [];
-
-		this.edit(options, true);
 
 		/**
 		 * The [simple.space](https://npmjs.org/package/simple.space)'s Client instance.
@@ -161,6 +159,7 @@ class Client extends EventEmitter {
 				if (!this.ready) {
 					this.ready = new Date();
 					this.emit(Events.READY, this.ready);
+					this.emit(Events.DEBUG, this.ready);
 				}
 				const old = parseInt(data.toString());
 				const now = Date.now();
