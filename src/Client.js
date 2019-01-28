@@ -3,6 +3,16 @@ const PartialUser = require('./structures/PartialUser.js');
 const WebSocket = require('ws');
 const EventEmitter = require('events');
 
+/**
+ * @external WebSocket
+ * @see https://github.com/websockets/ws/blob/master/lib/websocket.js
+ */
+
+/**
+ * @external Bot
+ * @see https://github.com/BLU-Shack/simple.space/blob/master/src/structures/Bot.js
+ */
+
 const Events = {
 	READY: 'ready',
 	CLOSE: 'close',
@@ -14,11 +24,6 @@ const Codes = {
 	'3': 'BOT_INVITE',
 	'4': 'BOT_UPVOTE'
 };
-
-/**
- * @external WebSocket
- * @see https://github.com/websockets/ws/blob/master/lib/websocket.js
- */
 
 /**
  * The Client that connects to the botlist.space gateway.
@@ -67,7 +72,7 @@ class Client extends EventEmitter {
 					this._debug('Unable to find simple.space module; Make sure ClientOptions#fetch is set to false...');
 				}
 
-				this._debug('Now Connecting...');
+				this._debug('Establishing stable connection...');
 
 				const body = {
 					op: 0,
@@ -207,6 +212,17 @@ class Client extends EventEmitter {
 		if (!Array.isArray(opts.tokens)) throw new TypeError('options.tokens must be an array.');
 		if (!opts.tokens.length) throw new SyntaxError('options.tokens must include at least 1 bot token provided from botlist.space.');
 		if (opts.tokens.some(i => typeof i !== 'string')) throw new TypeError('options.tokens requires all values to be a string.');
+
+		if (this.ready && opts.tokens !== this.options.tokens) {
+			this.ws.send(JSON.stringify({
+				op: 0,
+				t: Date.now(),
+				d: { tokens: this.options.tokens },
+			}), e => {
+				if (e) this.emit('error', e);
+				else this._debug('Updated Bot API Tokens - ');
+			});
+		}
 
 		return this.options = opts;
 	}
