@@ -222,7 +222,7 @@ class Client extends EventEmitter {
 				d: { tokens: this.options.tokens },
 			}), e => {
 				if (e) this.emit('error', e);
-				else this._debug('Updated Bot API Tokens - ');
+				else this._debug('Updated Bot API Tokens');
 			});
 		}
 
