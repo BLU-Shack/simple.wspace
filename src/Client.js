@@ -151,6 +151,8 @@ class Client extends EventEmitter {
 					};
 
 					this.emit('upvote', upvote);
+				} else {
+					this._debug('Unrecognized Event\n\n', data);
 				}
 			})
 			.on('error', this._debug)
