@@ -131,7 +131,7 @@ class Client extends EventEmitter {
 				} else if (data.op === 4) {
 					/**
 					 * @typedef {object} UpvoteContents
-					 * @property {Bot} [bot] The bot that was requested of an invite of.
+					 * @property {Bot} [bot] The bot that was upvoted.
 					 * @property {string} botID The bot's Discord ID.
 					 * @property {PartialUser} user The user that upvoted the bot.
 					 * @property {string} userID The user's Discord ID.
